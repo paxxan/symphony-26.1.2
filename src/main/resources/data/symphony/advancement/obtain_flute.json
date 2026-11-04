@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "obtain_flute_criteria": {
+      "conditions": {
+        "items": [
+          {
+            "items": "symphony:flute"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:gui/advancements/backgrounds/adventure",
+    "description": "Obtain the Flute of the Winds",
+    "frame": "goal",
+    "icon": {
+      "id": "symphony:flute"
+    },
+    "title": "Symphony"
+  },
+  "requirements": [
+    [
+      "obtain_flute_criteria"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

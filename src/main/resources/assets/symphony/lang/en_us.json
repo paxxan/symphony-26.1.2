@@ -1,0 +1,14 @@
+{
+  "item.symphony.flute": "Flute of the Winds",
+  "item.symphony.flute_spirit_spawn_egg": "Flute Spirit Spawn Egg",
+  "item.symphony.green_apple": "Green Apple",
+
+  "key.symphony.flute_up_note": "Up Note",
+  "key.symphony.flute_left_note": "Left Note",
+  "key.symphony.flute_right_note": "Right Note",
+  "key.symphony.flute_down_note": "Down Note",
+
+  "key.category.symphony.flute_notes": "Symphony Flute Notes",
+
+  "entity.symphony.flute_spirit": "Flute Spirit"
+}

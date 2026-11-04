@@ -1,0 +1,31 @@
+{
+  "parent": "symphony:obtain_flute",
+  "criteria": {
+    "eat_green_apple_criteria": {
+      "conditions": {
+        "item": {
+          "items": "symphony:green_apple"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "background": "minecraft:gui/advancements/backgrounds/adventure",
+    "description": "Eat a Green Apple",
+    "frame": "challenge",
+    "icon": {
+      "id": "symphony:green_apple"
+    },
+    "title": "It's Green Because it Can Be Placed Here"
+  },
+  "requirements": [
+    [
+      "eat_green_apple_criteria"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

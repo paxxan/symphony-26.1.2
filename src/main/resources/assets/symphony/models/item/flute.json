@@ -73,5 +73,24 @@
 			}
 		}
 	],
-	"display": {}
+	"gui_light": "front",
+	"display": {
+		"firstperson_lefthand": {
+			"rotation": [0, 180, 0]
+		},
+		"gui": {
+			"rotation": [-165, -45, -180],
+			"translation": [0.25, 0, 0]
+		},
+		"head": {
+			"rotation": [0, 90, 0],
+			"translation": [-5, -4, -7.25]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0]
+		},
+		"on_shelf": {
+			"rotation": [0, -90, 0]
+		}
+	}
 }
