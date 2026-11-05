@@ -28,10 +28,6 @@ public class WarHornSpell extends BaseFluteSpell {
     static int BASE_KNOCKBACK_AMOUNT = 2;
     int RADIUS = 2;
 
-    private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new SimpleExplosionDamageCalculator(
-            false, true, Optional.of((float) BASE_KNOCKBACK_AMOUNT), BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
-    );
-
     public WarHornSpell() {
         super();
         this.name = "War Horn";
@@ -43,20 +39,20 @@ public class WarHornSpell extends BaseFluteSpell {
 
     @Override
     public void cast(Level level, Player player) {
-        level.explode(
-                player,
-                null,
-                EXPLOSION_DAMAGE_CALCULATOR,
-                player.getX(),
-                player.getY(),
-                player.getZ(),
-                RADIUS,
-                false,
-                Level.ExplosionInteraction.TRIGGER,
-                ParticleTypes.GUST_EMITTER_SMALL,
-                ParticleTypes.GUST_EMITTER_LARGE,
-                WeightedList.of(),
-                SoundEvents.BREEZE_WIND_CHARGE_BURST
-        );
+        level.explode(player, player.getX(), player.getY(), player.getZ(), RADIUS, false, Level.ExplosionInteraction.TRIGGER);
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                    player.getX(),
+                    player.getY(),
+                    player.getZ(),
+                    32,
+                    0.5,
+                    0.5,
+                    0.5,
+                    1);
+        }
+        level.playSound(null, player.blockPosition(), SoundEvents.RAID_HORN.value(), SoundSource.PLAYERS);
+
     }
 }
