@@ -27,6 +27,16 @@ dependencies {
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
+repositories {
+	flatDir {
+		dirs 'libs'
+	}
+}
+
+dependencies {
+	implementation name: 'sparkle'
+}
+
 processResources {
 	def version = project.version
 	inputs.property "version", version
