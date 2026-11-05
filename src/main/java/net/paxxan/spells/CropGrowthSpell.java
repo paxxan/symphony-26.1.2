@@ -2,6 +2,7 @@ package net.paxxan.spells;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,8 +19,10 @@ public class CropGrowthSpell extends BaseFluteSpell {
     public CropGrowthSpell() {
         super();
         this.name = "Spell of Growth";
+        this.id = "crop_growth";
         this.description = "Instantaneously grows crops in a " + RADIUS + "x" + RADIUS + " radius.";
         this.sequence = "UUD";
+        this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
     }
 
     @Override

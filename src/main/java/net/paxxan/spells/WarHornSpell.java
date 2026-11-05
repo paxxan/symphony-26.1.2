@@ -7,6 +7,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,8 +25,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class WarHornSpell extends BaseFluteSpell {
-    static int BASE_KNOCKBACK_AMOUNT = 5;
-    int RADIUS = 3;
+    static int BASE_KNOCKBACK_AMOUNT = 2;
+    int RADIUS = 2;
 
     private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new SimpleExplosionDamageCalculator(
             false, true, Optional.of((float) BASE_KNOCKBACK_AMOUNT), BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
@@ -33,8 +35,10 @@ public class WarHornSpell extends BaseFluteSpell {
     public WarHornSpell() {
         super();
         this.name = "War Horn";
+        this.id = "war_horn";
         this.description = "Knocks back enemies in a " + RADIUS + " block radius.";
         this.sequence = "UULRLU";
+        this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
     }
 
     @Override
@@ -46,13 +50,13 @@ public class WarHornSpell extends BaseFluteSpell {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                (float) RADIUS / 2,
+                RADIUS,
                 false,
                 Level.ExplosionInteraction.TRIGGER,
                 ParticleTypes.GUST_EMITTER_SMALL,
                 ParticleTypes.GUST_EMITTER_LARGE,
                 WeightedList.of(),
-                SoundEvents.RAID_HORN
+                SoundEvents.BREEZE_WIND_CHARGE_BURST
         );
     }
 }

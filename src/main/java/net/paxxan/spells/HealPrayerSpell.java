@@ -24,8 +24,10 @@ public class HealPrayerSpell extends BaseFluteSpell {
     public HealPrayerSpell() {
         super();
         this.name = "Heal Prayer";
+        this.id = "heal_prayer";
         this.description = "Heals entities in a " + RADIUS + " block radius approximately " + HEAL_AMOUNT + " health.";
         this.sequence = "LRLRD";
+        this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
     }
 
     @Override
