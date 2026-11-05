@@ -34,6 +34,7 @@ public class WarHornSpell extends BaseFluteSpell {
         this.description = "Knocks back enemies in a " + RADIUS + " block radius.";
         this.sequence = "UULRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
+        this.post_spell_cooldown = 200;
     }
 
     @Override

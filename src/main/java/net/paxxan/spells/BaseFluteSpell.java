@@ -11,6 +11,7 @@ public class BaseFluteSpell {
     String sequence = "";
     String id = "";
     Identifier book_texture = Symphony.id("textures/item/spellbook/2d/home.png");
+    int post_spell_cooldown;
 
 
     public BaseFluteSpell() {
@@ -23,6 +24,10 @@ public class BaseFluteSpell {
         Symphony.LOGGER.info("Spell {} has unoverrided cast() function.", this.name);
     }
 
+    public void preCast(Level level, Player player) {
+        ;
+    }
+
     public String getSequence() {
         return sequence;
     }
@@ -33,5 +38,9 @@ public class BaseFluteSpell {
 
     public Identifier getBookTexture() {
         return book_texture;
+    }
+
+    public int getCooldown() {
+        return post_spell_cooldown;
     }
 }

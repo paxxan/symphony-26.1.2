@@ -28,16 +28,17 @@ public class HealPrayerSpell extends BaseFluteSpell {
         this.description = "Heals entities in a " + RADIUS + " block radius approximately " + HEAL_AMOUNT + " health.";
         this.sequence = "LRLRD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
+        this.post_spell_cooldown = 150;
     }
 
     @Override
     public void cast(Level level, Player player) {
+        player.heal(HEAL_AMOUNT * 2);
         AABB box = new AABB(player.getX() - (RADIUS / 2), player.getY() - (RADIUS / 2), player.getZ() - (RADIUS / 2), player.getX() + (RADIUS / 2), player.getY() + (RADIUS / 2), player.getZ() + (RADIUS / 2));
         List<Entity> entities = level.getEntities(player, box);
         for (Entity entity : entities) {
             if (entity instanceof LivingEntity livingEntity) {
-                livingEntity.heal(HEAL_AMOUNT / (entity.distanceTo(player) / 10));
-                Symphony.LOGGER.info(entity.distanceTo(player) + " heals the entity " + HEAL_AMOUNT / entity.distanceTo(player));
+                livingEntity.heal(HEAL_AMOUNT / (entity.distanceTo(player) / 5));
                 if (level instanceof ServerLevel serverLevel) {
                     serverLevel.sendParticles(ParticleTypes.HEART, livingEntity.getX(), livingEntity.getY() + (livingEntity.getEyeHeight() / 2), livingEntity.getZ(), 16, livingEntity.getBbWidth() * 0.4, livingEntity.getEyeHeight() * 0.4, livingEntity.getBbWidth() * 0.4, 0.05);
                 }

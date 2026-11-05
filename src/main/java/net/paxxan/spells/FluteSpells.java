@@ -10,13 +10,17 @@ public class FluteSpells {
     public static final WarHornSpell WAR_HORN = new WarHornSpell();
     public static final HomeSpell HOME = new HomeSpell();
     public static final SHCSpell SHC = new SHCSpell();
+    public static final PacifismSpell PACIFISM = new PacifismSpell();
+    public static final LeapSpell LEAP = new LeapSpell();
 
     public static final List<BaseFluteSpell> ALL_SPELLS = ImmutableList.of(
             CROP_GROWTH,
             HEAL_PRAYER,
             WAR_HORN,
             HOME,
-            SHC
+            SHC,
+            PACIFISM,
+            LEAP
 
     );
 }

@@ -10,5 +10,8 @@
 
   "key.category.symphony.flute_notes": "Symphony Flute Notes",
 
-  "entity.symphony.flute_spirit": "Flute Spirit"
+  "entity.symphony.flute_spirit": "Flute Spirit",
+
+  "effect.symphony.pacifism": "Pacifism",
+  "effect.symphony.full_lungs": "Full Lungs"
 }

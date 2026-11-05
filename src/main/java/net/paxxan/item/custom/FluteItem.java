@@ -1,10 +1,12 @@
 package net.paxxan.item.custom;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.paxxan.Symphony;
+import net.paxxan.effect.ModEffects;
 import net.paxxan.item.ModComponents;
 import net.paxxan.spells.BaseFluteSpell;
 import net.paxxan.spells.FluteSpells;
@@ -51,7 +54,7 @@ public class FluteItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
-        if(slot != EquipmentSlot.MAINHAND) {
+        if(slot != EquipmentSlot.MAINHAND || !owner.isAlive()) {
             itemStack.set(ModComponents.FLUTE_PLAYING_COMPONENT, false);
             itemStack.set(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
         }
@@ -60,10 +63,20 @@ public class FluteItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
+        boolean spell_cast = false;
+        boolean full_lungs = false;
+        MobEffectInstance effectInstance = null;
+        int amplifier = 1;
+        if (player.hasEffect(ModEffects.FULL_LUNGS)) {
+            full_lungs = true;
+            effectInstance = player.getEffect(ModEffects.FULL_LUNGS);
+            assert effectInstance != null;
+            amplifier = effectInstance.getAmplifier() + 1;
+        }
         if(hand == InteractionHand.MAIN_HAND) {
             ItemStack stack = player.getItemInHand(hand);
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_TRUMPET_OXIDIZED, SoundSource.PLAYERS, 1f, 1f);
-            player.getCooldowns().addCooldown(stack, 20);
+
+
             String sequence = stack.getOrDefault(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
             if (!level.isClientSide()) {
                 if (stack.get(ModComponents.FLUTE_PLAYING_COMPONENT) == Boolean.FALSE) {
@@ -75,6 +88,13 @@ public class FluteItem extends Item {
                     for (BaseFluteSpell spell : FluteSpells.ALL_SPELLS) {
                         if (sequence.equals(spell.getSequence())) {
                             spell.cast(level, player);
+                            if (full_lungs) {
+                                //Symphony.LOGGER.info("New Cooldown: " + String.valueOf(spell.getCooldown() / (effectInstance.getAmplifier() * 2)));
+                                player.getCooldowns().addCooldown(stack, spell.getCooldown() / (amplifier * 2));
+                            } else {
+                                player.getCooldowns().addCooldown(stack, spell.getCooldown());
+                            }
+                            spell_cast = true;
                             spellFound = true;
                             break;
                         }
@@ -84,8 +104,20 @@ public class FluteItem extends Item {
                     }
                     stack.set(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
                 }
+                if (!spell_cast) {
+                    if (player.hasEffect(ModEffects.FULL_LUNGS)) {
+                        player.getCooldowns().addCooldown(stack, 5);
+                    } else {
+                        player.getCooldowns().addCooldown(stack, 20);
+                    }
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_TRUMPET_OXIDIZED, SoundSource.PLAYERS, 1f, 1f);
+                } else {
+                    stack.hurtAndBreak(1, player, hand);
+                }
+
 
             }
+
             return InteractionResult.SUCCESS_SERVER;
         }
         return super.use(level, player, hand);

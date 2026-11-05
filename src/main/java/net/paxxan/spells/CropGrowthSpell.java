@@ -23,6 +23,7 @@ public class CropGrowthSpell extends BaseFluteSpell {
         this.description = "Instantaneously grows crops in a " + RADIUS + "x" + RADIUS + " radius.";
         this.sequence = "UUD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
+        this.post_spell_cooldown = 60;
     }
 
     @Override

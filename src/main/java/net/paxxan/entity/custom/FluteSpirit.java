@@ -16,12 +16,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -35,12 +39,16 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.zombie.Drowned;
 import net.minecraft.world.entity.npc.InventoryCarrier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
@@ -50,6 +58,7 @@ import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.paxxan.item.ModItems;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -91,9 +100,37 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
         this.dynamicVibrationListener = new DynamicGameEventListener<>(new VibrationSystem.Listener(this));
     }
 
+
+
     @Override
     protected Brain<FluteSpirit> makeBrain(final Brain.Packed packedBrain) {
         return BRAIN_PROVIDER.makeBrain(this, packedBrain);
+    }
+
+    @Override
+    protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
+        super.populateDefaultEquipmentSlots(random, difficulty);
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.FLUTE));
+        this.setDropChance(EquipmentSlot.MAINHAND, 1.0F);
+    }
+
+    @Override
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData groupData) {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        this.populateDefaultEquipmentSlots(level.getRandom(), difficulty);
+        if (!this.level().isClientSide()) {
+            if (spawnReason == EntitySpawnReason.NATURAL) {
+                this.addEffect(new MobEffectInstance(
+                        MobEffects.GLOWING,
+                        600,
+                        1,
+                        false,
+                        false
+                ));
+            }
+        }
+
+        return data;
     }
 
     @Override
@@ -159,6 +196,19 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
     @Override
     protected SoundEvent getAmbientSound() {
         return this.hasItemInSlot(EquipmentSlot.MAINHAND) ? SoundEvents.ALLAY_AMBIENT_WITH_ITEM : SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM;
+    }
+
+    public static boolean checkFluteSpiritSpawnRules(final EntityType<FluteSpirit> type, final ServerLevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random) {
+        if (spawnReason == EntitySpawnReason.NATURAL) {
+            if (random.nextFloat() > 0.1f || level.getSkyDarken() > 4) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+
     }
 
     @Override

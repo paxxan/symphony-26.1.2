@@ -11,6 +11,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Consumables;
 import net.paxxan.Symphony;
 import net.paxxan.entity.ModEntities;
+import net.paxxan.food.ModFoods;
 import net.paxxan.item.custom.FluteItem;
 
 import java.util.function.Function;
@@ -19,7 +20,7 @@ public class ModItems {
 
     public static final Item FLUTE = register(
             "flute",
-            properties -> new FluteItem(properties.durability(32).component(ModComponents.FLUTE_PLAYING_COMPONENT, false).component(ModComponents.FLUTE_SEQUENCE_COMPONENT, "")));
+            properties -> new FluteItem(properties.durability(64).component(ModComponents.FLUTE_PLAYING_COMPONENT, false).component(ModComponents.FLUTE_SEQUENCE_COMPONENT, "")));
 
     public static final Item FLUTE_SPIRIT_SPAWN_EGG = register(
             "flute_spirit_spawn_egg",
@@ -29,7 +30,7 @@ public class ModItems {
             "green_apple",
             properties -> new Item(properties
                     .rarity(Rarity.RARE)
-                    .food(Foods.ENCHANTED_GOLDEN_APPLE, Consumables.ENCHANTED_GOLDEN_APPLE)
+                    .food(ModFoods.GREEN_APPLE, ModFoods.GREEN_APPLE_CONSUMABLE)
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             )
     );
