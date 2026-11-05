@@ -30,9 +30,11 @@ public class HomeSpell extends BaseFluteSpell {
         BlockPos spawn_point = player.blockPosition();
         if (level instanceof ServerLevel serverLevel) {
             spawn_point = serverLevel.getRespawnData().pos();
-        }
-        if (player instanceof ServerPlayer serverPlayer) {
-            spawn_point = serverPlayer.getRespawnConfig().respawnData().pos();
+            if (player instanceof ServerPlayer serverPlayer) {
+                if (serverPlayer.getRespawnConfig() != null) {
+                    spawn_point = serverPlayer.getRespawnConfig().respawnData().pos();
+                }
+            }
         }
         player.teleportTo(spawn_point.getX(), spawn_point.getY(), spawn_point.getZ());
         level.playSound(null, player.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS);

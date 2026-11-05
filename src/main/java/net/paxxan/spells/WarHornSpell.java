@@ -25,8 +25,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class WarHornSpell extends BaseFluteSpell {
-    static int BASE_KNOCKBACK_AMOUNT = 2;
-    int RADIUS = 2;
+    int RADIUS = 3;
 
     public WarHornSpell() {
         super();
@@ -39,6 +38,7 @@ public class WarHornSpell extends BaseFluteSpell {
 
     @Override
     public void cast(Level level, Player player) {
+        level.playSound(null, player.blockPosition(), SoundEvents.GOAT_HORN_SOUND_VARIANTS.get(0).value(), SoundSource.PLAYERS, 1f, 1f);
         level.explode(player, player.getX(), player.getY(), player.getZ(), RADIUS, false, Level.ExplosionInteraction.TRIGGER);
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(
@@ -46,13 +46,11 @@ public class WarHornSpell extends BaseFluteSpell {
                     player.getX(),
                     player.getY(),
                     player.getZ(),
-                    32,
-                    0.5,
-                    0.5,
-                    0.5,
-                    1);
+                    64,
+                    0.25,
+                    0.25,
+                    0.25,
+                    0.5);
         }
-        level.playSound(null, player.blockPosition(), SoundEvents.RAID_HORN.value(), SoundSource.PLAYERS);
-
     }
 }
