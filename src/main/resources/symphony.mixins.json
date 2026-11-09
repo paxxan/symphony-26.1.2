@@ -3,7 +3,8 @@
 	"package": "net.paxxan.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
-		"FluteHoldPoseMixin"
+		"FluteHoldPoseMixin",
+		"IllusionPoofMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -1,9 +1,12 @@
 package net.paxxan.spells;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.paxxan.Symphony;
+import net.paxxan.item.ModComponents;
 
 public class BaseFluteSpell {
     String name;
@@ -42,5 +45,13 @@ public class BaseFluteSpell {
 
     public int getCooldown() {
         return post_spell_cooldown;
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public Component getTranslatableName() {
+        return Component.translatable("symphony.spells." + id);
     }
 }

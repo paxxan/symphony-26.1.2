@@ -13,5 +13,22 @@
   "entity.symphony.flute_spirit": "Flute Spirit",
 
   "effect.symphony.pacifism": "Pacifism",
-  "effect.symphony.full_lungs": "Full Lungs"
+  "effect.symphony.full_lungs": "Full Lungs",
+  "effect.symphony.spelunker": "Golden Eyes",
+
+  "creativeTab.symphony.spellbooks": "Symphony Spellbooks",
+  "creativeTab.symphony.symphony": "Symphony",
+
+  "symphony.spells.crop_growth": "Growth",
+  "symphony.spells.beanstalk": "Beanstalk",
+  "symphony.spells.food": "Food",
+  "symphony.spells.heal_prayer": "Heal Prayer",
+  "symphony.spells.home": "Spell of Homewards",
+  "symphony.spells.illusion": "Illusion of the Self",
+  "symphony.spells.leap": "Wind Leap",
+  "symphony.spells.pacifism": "Pacifism",
+  "symphony.spells.poison": "Poison",
+  "symphony.spells.shc": "Spontaneous Human Combustion",
+  "symphony.spells.spelunker": "Spelunker",
+  "symphony.spells.war_horn": "War Horn"
 }

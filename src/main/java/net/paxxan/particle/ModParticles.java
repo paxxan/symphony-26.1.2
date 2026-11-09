@@ -10,10 +10,17 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.paxxan.Symphony;
 
 public class ModParticles {
-    public static final SimpleParticleType FOREST_SPIRIT_PARTICLE = FabricParticleTypes.simple();
+    public static final SimpleParticleType FLUTE_SPIRIT_PARTICLE = Registry.register(
+            BuiltInRegistries.PARTICLE_TYPE, Symphony.id("flute_spirit_particle"),
+            FabricParticleTypes.simple()
+    );
+
+    public static final SimpleParticleType SPELUNKER_PARTICLE = Registry.register(
+            BuiltInRegistries.PARTICLE_TYPE, Symphony.id("spelunker_particle"),
+            FabricParticleTypes.simple()
+    );
 
     public static void registerParticles() {
         Symphony.LOGGER.info("Registering Particles for " + Symphony.MOD_ID);
-        Registry.register(BuiltInRegistries.PARTICLE_TYPE, Symphony.id("forest_spirit_particle"), FOREST_SPIRIT_PARTICLE);
     }
 }
