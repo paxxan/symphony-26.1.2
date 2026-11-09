@@ -1,0 +1,10 @@
+{
+  "poof": {
+    "sounds": [
+      "symphony:poof1",
+      "symphony:poof2",
+      "symphony:poof3"
+    ],
+    "subtitle": "sounds.symphony.poof"
+  }
+}

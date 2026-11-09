@@ -59,6 +59,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.paxxan.item.ModItems;
+import net.paxxan.particle.ModParticles;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -254,20 +255,16 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide()) {
-            if(this.level().getGameTime() >= 13000 && this.level().getGameTime() <= 23000) {
+        if (this.level() instanceof ServerLevel serverLevel) {
+            if(serverLevel.isDarkOutside()) {
                 if (this.tickCount % 4 == 0) {
                     for (int i = 0; i < 2; i++) {
-                        this.level()
-                                .addParticle(
-                                        ParticleTypes.FIREFLY,
-                                        this.getRandomX(0.5),
-                                        this.getRandomY() + 0.25,
-                                        this.getRandomZ(0.5),
-                                        (this.random.nextDouble() - 0.5) * 2.0,
-                                        -this.random.nextDouble(),
-                                        (this.random.nextDouble() - 0.5) * 2.0
-                                );
+                        serverLevel.sendParticles(
+                                        ModParticles.FLUTE_SPIRIT_PARTICLE,
+                                        this.getX() + Mth.randomBetween(serverLevel.getRandom(), -0.6f, 0.6f),
+                                        this.getY() + 0.2 + Mth.randomBetween(serverLevel.getRandom(), -0.6f, 0.6f),
+                                        this.getZ() + Mth.randomBetween(serverLevel.getRandom(), -0.6f, 0.6f),
+                                        1, 0.1, 0.1, 0.1, 0.015);
                     }
                 }
             }

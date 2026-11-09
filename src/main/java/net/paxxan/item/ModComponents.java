@@ -21,6 +21,12 @@ public class ModComponents {
             DataComponentType.<String>builder().persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build()
     );
 
+    public static final DataComponentType<String> SPELL_ID = Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            Symphony.id("spell_id"),
+            DataComponentType.<String>builder().persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build()
+    );
+
 
     public static void registerComponents() {
         Symphony.LOGGER.info("Registering data components for " + Symphony.MOD_ID);

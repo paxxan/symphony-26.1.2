@@ -11,11 +11,15 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.EnchantingTableBlock;
 import net.paxxan.item.ModComponents;
 import net.paxxan.item.ModItems;
 import net.paxxan.keymapping.ModKeyMappings;
 import net.paxxan.spells.BaseFluteSpell;
 import net.paxxan.spells.FluteSpells;
+import net.paxxan.spells.PlayerSpellManager;
+
+import static net.paxxan.SymphonyClient.GALACTIC;
 
 public class FlutePlayGUIClientHandler implements ClientModInitializer {
     @Override
@@ -23,7 +27,9 @@ public class FlutePlayGUIClientHandler implements ClientModInitializer {
     }
 
     public static void extract(GuiGraphicsExtractor graphics, DeltaTracker tickCounter) {
+
         Minecraft client = Minecraft.getInstance();
+
 
         Font font = client.font;
         if (client.player != null) {
@@ -34,11 +40,13 @@ public class FlutePlayGUIClientHandler implements ClientModInitializer {
                     BaseFluteSpell spell = getSpellFromSequence(rendered_sequence);
                     int font_color = spell != null ? 0xFF00FF00 : 0xFFFFFFFF;
                     if (spell != null) {
-                        graphics.text(font, spell.getName(), (graphics.guiWidth() / 2) - (font.width(spell.getName()) / 2), (graphics.guiHeight() / 2) + 24, 0xFF00FF00, true);
-                        graphics.blit(RenderPipelines.GUI_TEXTURED, spell.getBookTexture(), (graphics.guiWidth() / 2) - 16, (graphics.guiHeight() / 2) - 16, 0, 0, 32, 32, 32, 32,32, 32);
+                        boolean known = PlayerSpellManager.knowsSpell(client.player, Symphony.id(spell.getID()));
+                        Component name = known ? spell.getTranslatableName() : spell.getTranslatableName().copy().withStyle(GALACTIC);
+                        Identifier texture = known ? spell.getBookTexture() : Symphony.id("textures/item/spellbook/2d/unknown_book.png");
+                        graphics.text(font, name, (graphics.guiWidth() / 2) - (font.width(name) / 2), (graphics.guiHeight() / 2) + 24, 0xFF00FF00, true);
+                        graphics.blit(RenderPipelines.GUI_TEXTURED, texture, (graphics.guiWidth() / 2) - 16, (graphics.guiHeight() / 2) - 16, 0, 0, 32, 32, 32, 32, 32, 32);
                     }
                     rendered_sequence = convertSequenceToArrows(rendered_sequence);
-
                     graphics.text(font, rendered_sequence, (graphics.guiWidth() / 2) - (font.width(rendered_sequence) / 2), (graphics.guiHeight() / 2) - 32, font_color, true);
                     renderKeyPanels(graphics, tickCounter, client);
                 }

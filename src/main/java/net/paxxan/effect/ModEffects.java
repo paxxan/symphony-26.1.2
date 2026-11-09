@@ -16,6 +16,9 @@ public class ModEffects {
     public static final Holder<MobEffect> FULL_LUNGS = register("full_lungs",
             new FullLungsEffect(MobEffectCategory.BENEFICIAL, 0xFF7777));
 
+    public static final Holder<MobEffect> SPELUNKER = register("spelunker",
+            new SpelunkerEffect(MobEffectCategory.BENEFICIAL, 0xFFFF00));
+
     private static Holder<MobEffect> register(String name, MobEffect effect) {
         return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Symphony.id(name), effect);
     }

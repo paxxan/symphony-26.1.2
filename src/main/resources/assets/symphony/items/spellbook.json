@@ -1,0 +1,98 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:component",
+    "component": "symphony:spell_id",
+    "cases": [
+      {
+        "when": "crop_growth",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/crop_growth"
+        }
+      },
+      {
+        "when": "beanstalk",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/beanstalk"
+        }
+      },
+      {
+        "when": "food",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/food"
+        }
+      },
+      {
+        "when": "heal_prayer",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/heal_prayer"
+        }
+      },
+      {
+        "when": "home",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/home"
+        }
+      },
+      {
+        "when": "illusion",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/illusion"
+        }
+      },
+      {
+        "when": "leap",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/leap"
+        }
+      },
+      {
+        "when": "pacifism",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/pacifism"
+        }
+      },
+      {
+        "when": "poison",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/poison"
+        }
+      },
+      {
+        "when": "shc",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/shc"
+        }
+      },
+      {
+        "when": "spelunker",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/spelunker"
+        }
+      },
+      {
+        "when": "war_horn",
+        "model": {
+          "type": "minecraft:model",
+          "model": "symphony:item/spellbook/2d/war_horn"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "symphony:item/spellbook/2d/crop_growth"
+    }
+  }
+}
+
