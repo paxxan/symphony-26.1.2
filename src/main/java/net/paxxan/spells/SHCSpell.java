@@ -18,11 +18,12 @@ public class SHCSpell extends BaseFluteSpell {
         this.description = "Sets the user on fire?";
         this.sequence = "RLULD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 20;
+        this.post_spell_cooldown = (int) (20 * 1);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         if (player instanceof ServerPlayer serverPlayer) {
             serverPlayer.setRemainingFireTicks(60);
         }

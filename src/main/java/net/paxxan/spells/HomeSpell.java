@@ -23,11 +23,12 @@ public class HomeSpell extends BaseFluteSpell {
         this.description = "Returns the user to their spawn point.";
         this.sequence = "LLLRLLRLRDR";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 600;
+        this.post_spell_cooldown = (int) (20 * 60);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         BlockPos spawn_point = player.blockPosition();
         if (level instanceof ServerLevel serverLevel) {
             spawn_point = serverLevel.getRespawnData().pos();

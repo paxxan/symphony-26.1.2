@@ -23,11 +23,12 @@ public class CropGrowthSpell extends BaseFluteSpell {
         this.description = "Instantaneously grows crops in a " + RADIUS + "x" + RADIUS + " radius.";
         this.sequence = "UUD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 60;
+        this.post_spell_cooldown = (int) (20 * 7.5);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         Iterable<BlockPos> affected_blocks = BlockPos.withinManhattan(player.blockPosition(), RADIUS / 2, RADIUS / 2, RADIUS / 2);
         for (BlockPos blockPos : affected_blocks) {
             BlockState state = level.getBlockState(blockPos);

@@ -17,11 +17,12 @@ public class IllusionSpell extends BaseFluteSpell {
         this.description = "Creates a decoy of the self.";
         this.sequence = "RDLD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 100;
+        this.post_spell_cooldown = (int) (20 * 10);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         if (level instanceof ServerLevel serverLevel) {
             IllusionEntity.spawn(serverLevel, player);
         }

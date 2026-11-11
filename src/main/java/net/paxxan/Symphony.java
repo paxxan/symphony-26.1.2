@@ -2,18 +2,23 @@ package net.paxxan;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.paxxan.attachments.ModDataAttachments;
+import net.paxxan.block.ModBlocks;
 import net.paxxan.commands.ModCommands;
 import net.paxxan.effect.ModEffects;
 import net.paxxan.entity.ModEntities;
@@ -23,6 +28,7 @@ import net.paxxan.item.ModComponents;
 import net.paxxan.item.ModItems;
 import net.paxxan.networking.ModPackets;
 import net.paxxan.sound.ModSounds;
+import net.paxxan.spells.PlayerSpellManager;
 import net.paxxan.tags.ModTags;
 import net.paxxan.worldgen.gen.ModWorldGeneration;
 import org.slf4j.Logger;
@@ -34,6 +40,7 @@ public class Symphony implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModBlocks.registerBlocks();
 		ModItems.registerItems();
 		ModPackets.registerPackets();
 		ModEntities.registerEntities();
@@ -54,6 +61,12 @@ public class Symphony implements ModInitializer {
 				return false;
 			}
 			return true;
+		});
+
+		ServerTickEvents.END_SERVER_TICK.register(server -> {
+			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+				PlayerSpellManager.tickSpellCooldowns(player);
+			}
 		});
 	}
 

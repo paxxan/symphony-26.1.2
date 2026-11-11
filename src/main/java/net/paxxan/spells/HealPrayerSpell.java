@@ -28,11 +28,12 @@ public class HealPrayerSpell extends BaseFluteSpell {
         this.description = "Heals entities in a " + RADIUS + " block radius approximately " + HEAL_AMOUNT + " health.";
         this.sequence = "LRLRD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 150;
+        this.post_spell_cooldown = 20 * 15;
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         player.heal(HEAL_AMOUNT * 2);
         AABB box = new AABB(player.getX() - (RADIUS / 2), player.getY() - (RADIUS / 2), player.getZ() - (RADIUS / 2), player.getX() + (RADIUS / 2), player.getY() + (RADIUS / 2), player.getZ() + (RADIUS / 2));
         List<Entity> entities = level.getEntities(player, box);

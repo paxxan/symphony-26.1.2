@@ -32,27 +32,27 @@ public class FlutePlayGUIClientHandler implements ClientModInitializer {
 
 
         Font font = client.font;
-        if (client.player != null) {
-            ItemStack item = client.player.getMainHandItem();
-            if (item.is(ModItems.FLUTE)) {
-                if (item.get(ModComponents.FLUTE_PLAYING_COMPONENT) == Boolean.TRUE) {
-                    String rendered_sequence = item.getOrDefault(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
-                    BaseFluteSpell spell = getSpellFromSequence(rendered_sequence);
-                    int font_color = spell != null ? 0xFF00FF00 : 0xFFFFFFFF;
-                    if (spell != null) {
-                        boolean known = PlayerSpellManager.knowsSpell(client.player, Symphony.id(spell.getID()));
-                        Component name = known ? spell.getTranslatableName() : spell.getTranslatableName().copy().withStyle(GALACTIC);
-                        Identifier texture = known ? spell.getBookTexture() : Symphony.id("textures/item/spellbook/2d/unknown_book.png");
-                        graphics.text(font, name, (graphics.guiWidth() / 2) - (font.width(name) / 2), (graphics.guiHeight() / 2) + 24, 0xFF00FF00, true);
-                        graphics.blit(RenderPipelines.GUI_TEXTURED, texture, (graphics.guiWidth() / 2) - 16, (graphics.guiHeight() / 2) - 16, 0, 0, 32, 32, 32, 32, 32, 32);
-                    }
-                    rendered_sequence = convertSequenceToArrows(rendered_sequence);
-                    graphics.text(font, rendered_sequence, (graphics.guiWidth() / 2) - (font.width(rendered_sequence) / 2), (graphics.guiHeight() / 2) - 32, font_color, true);
-                    renderKeyPanels(graphics, tickCounter, client);
+        if (client.player == null || client.options.hideGui) {
+            return;
+        }
+        ItemStack item = client.player.getMainHandItem();
+        if (item.is(ModItems.FLUTE)) {
+            if (item.get(ModComponents.FLUTE_PLAYING_COMPONENT) == Boolean.TRUE) {
+                String rendered_sequence = item.getOrDefault(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
+                BaseFluteSpell spell = getSpellFromSequence(rendered_sequence);
+                int font_color = spell != null ? (PlayerSpellManager.isReady(client.player, Symphony.id(spell.getID())) ? 0xFF00FF00 : 0xFFFFA500) : 0xFFFFFFFF;
+                if (spell != null) {
+                    boolean known = PlayerSpellManager.knowsSpell(client.player, Symphony.id(spell.getID()));
+                    Component name = known ? spell.getTranslatableName() : spell.getTranslatableName().copy().withStyle(GALACTIC);
+                    Identifier texture = known ? spell.getBookTexture() : Symphony.id("textures/item/spellbook/2d/unknown_book.png");
+                    graphics.text(font, name, (graphics.guiWidth() / 2) - (font.width(name) / 2), (graphics.guiHeight() / 2) + 24, font_color, true);
+                    graphics.blit(RenderPipelines.GUI_TEXTURED, texture, (graphics.guiWidth() / 2) - 16, (graphics.guiHeight() / 2) - 16, 0, 0, 32, 32, 32, 32, 32, 32);
                 }
+                rendered_sequence = convertSequenceToArrows(rendered_sequence);
+                graphics.text(font, rendered_sequence, (graphics.guiWidth() / 2) - (font.width(rendered_sequence) / 2), (graphics.guiHeight() / 2) - 32, font_color, true);
+                renderKeyPanels(graphics, tickCounter, client);
             }
         }
-
     }
 
     private static void renderKeyPanels(GuiGraphicsExtractor graphics, DeltaTracker tickCounter, Minecraft client) {

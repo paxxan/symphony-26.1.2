@@ -29,11 +29,12 @@ public class SpelunkerSpell extends BaseFluteSpell {
         this.description = "Allows the user to see valuables around them.";
         this.sequence = "DLDUDDD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 200;
+        this.post_spell_cooldown = (int) (20 * 60);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         player.addEffect(new MobEffectInstance(ModEffects.SPELUNKER, EFFECT_DUR_TICKS, 0), player);;
     }
 }

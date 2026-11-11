@@ -32,11 +32,12 @@ public class PacifismSpell extends BaseFluteSpell {
         this.description = "Makes entities in a " + RADIUS + " block radius peaceful for " + EFFECT_DUR_TICKS + " ticks.";
         this.sequence = "DDDLRLRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 200;
+        this.post_spell_cooldown = (int) (20 * 15);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         AABB box = new AABB(player.getX() - RADIUS, player.getY() - RADIUS, player.getZ() - RADIUS, player.getX() + RADIUS, player.getY() + RADIUS, player.getZ() + RADIUS);
         List<Entity> entities = level.getEntities(player, box);
         for (Entity entity : entities) {

@@ -2,6 +2,7 @@
   "item.symphony.flute": "Flute of the Winds",
   "item.symphony.flute_spirit_spawn_egg": "Flute Spirit Spawn Egg",
   "item.symphony.green_apple": "Green Apple",
+  "item.symphony.spellbook": "Spellbook",
 
   "key.symphony.flute_up_note": "Up Note",
   "key.symphony.flute_left_note": "Left Note",
@@ -19,16 +20,18 @@
   "creativeTab.symphony.spellbooks": "Symphony Spellbooks",
   "creativeTab.symphony.symphony": "Symphony",
 
-  "symphony.spells.crop_growth": "Growth",
-  "symphony.spells.beanstalk": "Beanstalk",
-  "symphony.spells.food": "Food",
-  "symphony.spells.heal_prayer": "Heal Prayer",
-  "symphony.spells.home": "Spell of Homewards",
-  "symphony.spells.illusion": "Illusion of the Self",
-  "symphony.spells.leap": "Wind Leap",
-  "symphony.spells.pacifism": "Pacifism",
-  "symphony.spells.poison": "Poison",
-  "symphony.spells.shc": "Spontaneous Human Combustion",
-  "symphony.spells.spelunker": "Spelunker",
-  "symphony.spells.war_horn": "War Horn"
+  "spell.symphony.crop_growth": "Growth",
+  "spell.symphony.beanstalk": "Beanstalk",
+  "spell.symphony.food": "Food",
+  "spell.symphony.heal_prayer": "Heal Prayer",
+  "spell.symphony.home": "Spell of Homewards",
+  "spell.symphony.illusion": "Illusion of the Self",
+  "spell.symphony.leap": "Wind Leap",
+  "spell.symphony.pacifism": "Pacifism",
+  "spell.symphony.poison": "Poison",
+  "spell.symphony.shc": "Spontaneous Human Combustion",
+  "spell.symphony.spelunker": "Spelunker",
+  "spell.symphony.war_horn": "War Horn",
+  "item.symphony.flute.cooldown_message": "Spell is on cooldown"
+
 }

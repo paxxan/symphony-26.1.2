@@ -20,9 +20,12 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.client.model.animal.allay.AllayModel;
 import net.minecraft.client.particle.EndRodParticle;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SoulParticle;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
@@ -47,6 +50,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.paxxan.block.ModBlocks;
+import net.paxxan.block.custom.SpellbookRenderer;
 import net.paxxan.effect.ModEffects;
 import net.paxxan.entity.ModEntities;
 import net.paxxan.entity.client.*;
@@ -58,9 +63,11 @@ import net.paxxan.keymapping.ModKeyMappings;
 import net.paxxan.networking.packet.FlutePlayPayloadC2S;
 import net.paxxan.particle.EmissiveParticle;
 import net.paxxan.particle.ModParticles;
+import net.paxxan.particle.PaperParticle;
 import net.paxxan.particle.SeeThroughParticle;
 import net.paxxan.spells.BaseFluteSpell;
 import net.paxxan.spells.FluteSpells;
+import net.paxxan.spells.PlayerSpellManager;
 import net.paxxan.tags.ModTags;
 import org.w3c.dom.Text;
 
@@ -79,9 +86,14 @@ public class SymphonyClient implements ClientModInitializer {
         EntityRenderers.register(ModEntities.ILLUSION, IllusionRenderer::new);
         ClientTickEvents.END_CLIENT_TICK.register(SymphonyClient::onEndTick);
 
-        HudElementRegistry.attachElementBefore(VanillaHudElements.CROSSHAIR, Symphony.id("key_panel"), FlutePlayGUIClientHandler::extract);
+        HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, Symphony.id("key_panel"), FlutePlayGUIClientHandler::extract);
+        HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Symphony.id("cooldown_previews"), CooldownGUIClientHandler::extract);
+
         ParticleProviderRegistry.getInstance().register(ModParticles.SPELUNKER_PARTICLE, SeeThroughParticle.Provider::new);
         ParticleProviderRegistry.getInstance().register(ModParticles.FLUTE_SPIRIT_PARTICLE, EmissiveParticle.Provider::new);
+        ParticleProviderRegistry.getInstance().register(ModParticles.PAPER_PARTICLE, PaperParticle.Provider::new);
+
+        BlockEntityRenderers.register(ModBlocks.SPELLBOOK_STACK_BE, SpellbookRenderer::new);
 
     }
 
@@ -113,9 +125,10 @@ public class SymphonyClient implements ClientModInitializer {
             }
         }
     }
-
+//
     public static void onEndTick(Minecraft client) {
         if (client.player != null) {
+            if (!client.isPaused()) PlayerSpellManager.tickSpellCooldowns(client.player);
             if (client.player.hasEffect(ModEffects.SPELUNKER)) {
                 renderSpelunkerParticles(client);
             }

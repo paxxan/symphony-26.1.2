@@ -34,11 +34,12 @@ public class WarHornSpell extends BaseFluteSpell {
         this.description = "Knocks back enemies in a " + RADIUS + " block radius.";
         this.sequence = "UULRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 200;
+        this.post_spell_cooldown = (int) (20 * 10);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         level.playSound(null, player.blockPosition(), SoundEvents.GOAT_HORN_SOUND_VARIANTS.get(0).value(), SoundSource.PLAYERS, 1f, 1f);
         level.explode(player, player.getX(), player.getY(), player.getZ(), RADIUS, false, Level.ExplosionInteraction.TRIGGER);
         if (level instanceof ServerLevel serverLevel) {

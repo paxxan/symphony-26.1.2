@@ -11,6 +11,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.Block;
 import net.paxxan.Symphony;
 import net.paxxan.entity.ModEntities;
 import net.paxxan.food.ModFoods;
@@ -40,7 +42,12 @@ public class ModItems {
 
     public static final Item SPELLBOOK = register(
             "spellbook",
-            properties -> new SpellbookItem(properties.component(ModComponents.SPELL_ID, "crop_growth")));
+            properties -> new SpellbookItem(properties
+                    .component(ModComponents.SPELL_ID, "crop_growth")
+                    .useBlockDescriptionPrefix()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+                    .setId(ResourceKey.create(Registries.ITEM, Symphony.id("spellbook")))));
 
 
     private static Item register(String name, Function<Item.Properties, Item> function) {
@@ -50,7 +57,7 @@ public class ModItems {
 
 
     public static final ResourceKey<CreativeModeTab> SYMPHONY_CREATIVE_TAB_KEY = ResourceKey.create(
-            BuiltInRegistries.CREATIVE_MODE_TAB.key(), Symphony.id("symphony_creative_tab")
+            BuiltInRegistries.CREATIVE_MODE_TAB.key(), Symphony.id("a_symphony_creative_tab")
     );
 
     public static final CreativeModeTab SYMPHONY_CREATIVE_TAB = FabricCreativeModeTab.builder()
@@ -65,8 +72,9 @@ public class ModItems {
 
 
     public static final ResourceKey<CreativeModeTab> SPELLBOOKS_CREATIVE_TAB_KEY = ResourceKey.create(
-            BuiltInRegistries.CREATIVE_MODE_TAB.key(), Symphony.id("spellbooks_creative_tab")
+            BuiltInRegistries.CREATIVE_MODE_TAB.key(), Symphony.id("b_spellbooks_creative_tab")
     );
+
 
     public static final CreativeModeTab SPELLBOOKS_CREATIVE_TAB = FabricCreativeModeTab.builder()
             .icon(() -> new ItemStack(SPELLBOOK))
@@ -81,6 +89,9 @@ public class ModItems {
                 addSpellbookToTab("illusion", output);
                 addSpellbookToTab("home", output);
                 addSpellbookToTab("war_horn", output);
+                addSpellbookToTab("beanstalk", output);
+                addSpellbookToTab("food", output);
+                addSpellbookToTab("poison", output);
             }))
             .build();
 

@@ -1,5 +1,6 @@
 package net.paxxan.item.custom;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -18,6 +19,7 @@ import net.paxxan.effect.ModEffects;
 import net.paxxan.item.ModComponents;
 import net.paxxan.spells.BaseFluteSpell;
 import net.paxxan.spells.FluteSpells;
+import net.paxxan.spells.PlayerSpellManager;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -67,19 +69,12 @@ public class FluteItem extends Item {
         boolean full_lungs = false;
         MobEffectInstance effectInstance = null;
         int amplifier = 1;
-        if (player.hasEffect(ModEffects.FULL_LUNGS)) {
-            full_lungs = true;
-            effectInstance = player.getEffect(ModEffects.FULL_LUNGS);
-            assert effectInstance != null;
-            amplifier = effectInstance.getAmplifier() + 1;
-        }
+
         if(hand == InteractionHand.MAIN_HAND) {
             ItemStack stack = player.getItemInHand(hand);
-
-
             String sequence = stack.getOrDefault(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
             if (!level.isClientSide()) {
-                if (stack.get(ModComponents.FLUTE_PLAYING_COMPONENT) == Boolean.FALSE) {
+                if (!Boolean.TRUE.equals(stack.get(ModComponents.FLUTE_PLAYING_COMPONENT))) {
                     stack.set(ModComponents.FLUTE_PLAYING_COMPONENT, Boolean.TRUE);
                     stack.set(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
                 } else {
@@ -87,15 +82,13 @@ public class FluteItem extends Item {
                     stack.set(ModComponents.FLUTE_PLAYING_COMPONENT, Boolean.FALSE);
                     for (BaseFluteSpell spell : FluteSpells.ALL_SPELLS) {
                         if (sequence.equals(spell.getSequence())) {
-                            spell.cast(level, player);
-                            if (full_lungs) {
-                                //Symphony.LOGGER.info("New Cooldown: " + String.valueOf(spell.getCooldown() / (effectInstance.getAmplifier() * 2)));
-                                player.getCooldowns().addCooldown(stack, spell.getCooldown() / (amplifier * 2));
-                            } else {
-                                player.getCooldowns().addCooldown(stack, spell.getCooldown());
-                            }
-                            spell_cast = true;
                             spellFound = true;
+                            if (PlayerSpellManager.isReady(player, Symphony.id(spell.getID()))) {
+                                spell.cast(level, player);
+                                spell_cast = true;
+                            } else {
+                                player.sendOverlayMessage(Component.translatable("item.symphony.flute.cooldown_message"));
+                            }
                             break;
                         }
                     }

@@ -4,9 +4,18 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.block.SoundType;
 import net.paxxan.Symphony;
 
 public class ModSounds {
+
+    public static final SoundType PAPER = new SoundType(1.0f, 1.0f,
+            SoundEvents.PAINTING_BREAK,
+            SoundEvents.BOOK_PUT,
+            SoundEvents.BOOK_PAGE_TURN,
+            SoundEvents.BOOK_PUT,
+            SoundEvents.BOOK_PUT);
 
     public static final SoundEvent POOF = register("poof");
 

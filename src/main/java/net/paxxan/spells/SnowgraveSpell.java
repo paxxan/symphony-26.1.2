@@ -27,11 +27,11 @@ public class SnowgraveSpell extends BaseFluteSpell {
         this.description = "Lethal.";
         this.sequence = "UDUDLRUD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 50;
+        this.post_spell_cooldown = (int) (20 * 60);
     }
 
     @Override
     public void cast(Level level, Player player) {
-
+        super.cast(level, player);
     }
 }

@@ -1,0 +1,4 @@
+{
+  "parent": "symphony:item/spellbook/3d/spellbook_3d",
+  "textures": { "cover": "symphony:item/spellbook/3d/war_horn" }
+}

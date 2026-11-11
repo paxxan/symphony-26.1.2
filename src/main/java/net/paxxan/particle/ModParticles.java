@@ -15,6 +15,11 @@ public class ModParticles {
             FabricParticleTypes.simple()
     );
 
+    public static final SimpleParticleType PAPER_PARTICLE = Registry.register(
+            BuiltInRegistries.PARTICLE_TYPE, Symphony.id("paper"),
+            FabricParticleTypes.simple()
+    );
+
     public static final SimpleParticleType SPELUNKER_PARTICLE = Registry.register(
             BuiltInRegistries.PARTICLE_TYPE, Symphony.id("spelunker_particle"),
             FabricParticleTypes.simple()

@@ -40,11 +40,12 @@ public class LeapSpell extends BaseFluteSpell {
         this.description = "Propels the user in the direction they are looking.";
         this.sequence = "UUUURLRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = 50;
+        this.post_spell_cooldown = (int) (20 * 7.5);
     }
 
     @Override
     public void cast(Level level, Player player) {
+        super.cast(level, player);
         if (player instanceof ServerPlayer serverPlayer) {
             player.setDeltaMovement(new Vec3(player.getDeltaMovement().x + (player.getLookAngle().x * LEAP_SPEED), player.getLookAngle().y * LEAP_SPEED, player.getDeltaMovement().z + (player.getLookAngle().z * LEAP_SPEED)));
             level

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "books=1": { "model": "symphony:block/spellbook_1" },
+    "books=2": { "model": "symphony:block/spellbook_2" },
+    "books=3": { "model": "symphony:block/spellbook_3" },
+    "books=4": { "model": "symphony:block/spellbook_4" }
+  }
+}

@@ -1,97 +1,201 @@
 {
   "model": {
     "type": "minecraft:select",
-    "property": "minecraft:component",
-    "component": "symphony:spell_id",
+    "property": "minecraft:display_context",
     "cases": [
       {
-        "when": "crop_growth",
+        "when": "fixed",
         "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/crop_growth"
-        }
-      },
-      {
-        "when": "beanstalk",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/beanstalk"
-        }
-      },
-      {
-        "when": "food",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/food"
-        }
-      },
-      {
-        "when": "heal_prayer",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/heal_prayer"
-        }
-      },
-      {
-        "when": "home",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/home"
-        }
-      },
-      {
-        "when": "illusion",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/illusion"
-        }
-      },
-      {
-        "when": "leap",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/leap"
-        }
-      },
-      {
-        "when": "pacifism",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/pacifism"
-        }
-      },
-      {
-        "when": "poison",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/poison"
-        }
-      },
-      {
-        "when": "shc",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/shc"
-        }
-      },
-      {
-        "when": "spelunker",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/spelunker"
-        }
-      },
-      {
-        "when": "war_horn",
-        "model": {
-          "type": "minecraft:model",
-          "model": "symphony:item/spellbook/2d/war_horn"
+          "type": "minecraft:select",
+          "property": "minecraft:component",
+          "component": "symphony:spell_id",
+          "cases": [
+            {
+              "when": "crop_growth",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/crop_growth"
+              }
+            },
+            {
+              "when": "beanstalk",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/beanstalk"
+              }
+            },
+            {
+              "when": "food",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/food"
+              }
+            },
+            {
+              "when": "heal_prayer",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/heal_prayer"
+              }
+            },
+            {
+              "when": "home",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/home"
+              }
+            },
+            {
+              "when": "illusion",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/illusion"
+              }
+            },
+            {
+              "when": "leap",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/leap"
+              }
+            },
+            {
+              "when": "pacifism",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/pacifism"
+              }
+            },
+            {
+              "when": "poison",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/poison"
+              }
+            },
+            {
+              "when": "shc",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/shc"
+              }
+            },
+            {
+              "when": "spelunker",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/spelunker"
+              }
+            },
+            {
+              "when": "war_horn",
+              "model": {
+                "type": "minecraft:model",
+                "model": "symphony:item/spellbook/3d/war_horn"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/3d/crop_growth"
+          }
         }
       }
     ],
     "fallback": {
-      "type": "minecraft:model",
-      "model": "symphony:item/spellbook/2d/crop_growth"
+      "type": "minecraft:select",
+      "property": "minecraft:component",
+      "component": "symphony:spell_id",
+      "cases": [
+        {
+          "when": "crop_growth",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/crop_growth"
+          }
+        },
+        {
+          "when": "beanstalk",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/beanstalk"
+          }
+        },
+        {
+          "when": "food",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/food"
+          }
+        },
+        {
+          "when": "heal_prayer",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/heal_prayer"
+          }
+        },
+        {
+          "when": "home",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/home"
+          }
+        },
+        {
+          "when": "illusion",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/illusion"
+          }
+        },
+        {
+          "when": "leap",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/leap"
+          }
+        },
+        {
+          "when": "pacifism",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/pacifism"
+          }
+        },
+        {
+          "when": "poison",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/poison"
+          }
+        },
+        {
+          "when": "shc",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/shc"
+          }
+        },
+        {
+          "when": "spelunker",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/spelunker"
+          }
+        },
+        {
+          "when": "war_horn",
+          "model": {
+            "type": "minecraft:model",
+            "model": "symphony:item/spellbook/2d/war_horn"
+          }
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:model",
+        "model": "symphony:item/spellbook/2d/crop_growth"
+      }
     }
   }
 }

@@ -58,8 +58,11 @@ import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.paxxan.item.ModComponents;
 import net.paxxan.item.ModItems;
 import net.paxxan.particle.ModParticles;
+import net.paxxan.spells.BaseFluteSpell;
+import net.paxxan.spells.FluteSpells;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -111,7 +114,15 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
     @Override
     protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         super.populateDefaultEquipmentSlots(random, difficulty);
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.FLUTE));
+        ItemStack stack;
+        if (random.nextBoolean()) {
+            BaseFluteSpell spell = FluteSpells.ALL_SPELLS.get(random.nextInt(FluteSpells.ALL_SPELLS.size()));
+            stack = new ItemStack(ModItems.SPELLBOOK);
+            stack.set(ModComponents.SPELL_ID, spell.getID());
+        } else {
+            stack = new ItemStack(ModItems.FLUTE);
+        }
+        this.setItemSlot(EquipmentSlot.MAINHAND, stack);
         this.setDropChance(EquipmentSlot.MAINHAND, 1.0F);
     }
 
@@ -201,7 +212,7 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
 
     public static boolean checkFluteSpiritSpawnRules(final EntityType<FluteSpirit> type, final ServerLevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random) {
         if (spawnReason == EntitySpawnReason.NATURAL) {
-            if (random.nextFloat() > 0.1f || level.getSkyDarken() > 4) {
+            if (random.nextFloat() > 0.3f || level.getSkyDarken() > 4) {
                 return false;
             } else {
                 return true;
@@ -251,9 +262,19 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
         }
     }
 
+
+
     @Override
     public void tick() {
         super.tick();
+        if (this.level().isClientSide()) {
+            this.holdingItemAnimationTicks0 = this.holdingItemAnimationTicks;
+            if (this.hasItemInHand()) {
+                this.holdingItemAnimationTicks = Mth.clamp(this.holdingItemAnimationTicks + 1.0F, 0.0F, 5.0F);
+            } else {
+                this.holdingItemAnimationTicks = Mth.clamp(this.holdingItemAnimationTicks - 1.0F, 0.0F, 5.0F);
+            }
+        }
 
         if (this.level() instanceof ServerLevel serverLevel) {
             if(serverLevel.isDarkOutside()) {
