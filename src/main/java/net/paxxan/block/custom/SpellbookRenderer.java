@@ -43,19 +43,19 @@ public class SpellbookRenderer implements BlockEntityRenderer<SpellbookStackBloc
     public State createRenderState() { return new State(); }
 
     @Override
-    public void extractRenderState(SpellbookStackBlockEntity be, State state, float partialTick,
+    public void extractRenderState(SpellbookStackBlockEntity blockEntity, State state, float partialTick,
                                    Vec3 cameraPos, ModelFeatureRenderer.CrumblingOverlay crumbling) {
-        BlockEntityRenderer.super.extractRenderState(be, state, partialTick, cameraPos, crumbling);
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPos, crumbling);
         state.books.clear();
         state.yaws.clear();
-        for (SpellbookStackBlockEntity.Book b : be.getBooks()) {
+        for (SpellbookStackBlockEntity.Book book : blockEntity.getBooks()) {
             ItemStack stack = new ItemStack(ModItems.SPELLBOOK);
-            stack.set(ModComponents.SPELL_ID, b.spell().getPath());
-            ItemStackRenderState rs = new ItemStackRenderState();
-            itemModelResolver.updateForTopItem(rs, stack, ItemDisplayContext.FIXED,
-                    be.getLevel(), null, 0);
-            state.books.add(rs);
-            state.yaws.add(b.yaw());
+            stack.set(ModComponents.SPELL_ID, book.spell().getPath());
+            ItemStackRenderState renderState = new ItemStackRenderState();
+            itemModelResolver.updateForTopItem(renderState, stack, ItemDisplayContext.FIXED,
+                    blockEntity.getLevel(), null, 0);
+            state.books.add(renderState);
+            state.yaws.add(book.yaw());
         }
     }
 

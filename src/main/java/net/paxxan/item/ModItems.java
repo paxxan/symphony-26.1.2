@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.paxxan.Symphony;
 import net.paxxan.entity.ModEntities;
 import net.paxxan.food.ModFoods;
+import net.paxxan.item.custom.EssenceItem;
 import net.paxxan.item.custom.FluteItem;
 import net.paxxan.item.custom.SpellbookItem;
 
@@ -38,6 +39,11 @@ public class ModItems {
                     .food(ModFoods.GREEN_APPLE, ModFoods.GREEN_APPLE_CONSUMABLE)
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             )
+    );
+
+    public static final Item MELODIC_ESSENCE = register(
+            "melodic_essence",
+            EssenceItem::new
     );
 
     public static final Item SPELLBOOK = register(
@@ -67,6 +73,7 @@ public class ModItems {
                 output.accept(FLUTE);
                 output.accept(GREEN_APPLE);
                 output.accept(FLUTE_SPIRIT_SPAWN_EGG);
+                output.accept(MELODIC_ESSENCE);
             }))
             .build();
 

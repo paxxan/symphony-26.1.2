@@ -9,6 +9,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.paxxan.entity.ModEntities;
 import net.paxxan.item.ModItems;
 
@@ -22,10 +23,19 @@ public class ModEntityLootTableProvider extends FabricEntityLootSubProvider {
     @Override
     public void generate() {
         this.add(ModEntities.FLUTE_SPIRIT,
-                LootTable.lootTable().withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(ModItems.GREEN_APPLE)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
-                        ).when(LootItemKilledByPlayerCondition.killedByPlayer())));
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(new UniformGenerator(new ConstantValue(0), new ConstantValue(1)))
+                                .add(LootItem.lootTableItem(ModItems.GREEN_APPLE)
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                                ).when(LootItemKilledByPlayerCondition.killedByPlayer())
+                        )
+                        .withPool(LootPool.lootPool()
+                                .setRolls(new UniformGenerator(new ConstantValue(4), new ConstantValue(8)))
+                                .add(LootItem.lootTableItem(ModItems.MELODIC_ESSENCE)
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                                ).when(LootItemKilledByPlayerCondition.killedByPlayer())
+                        )
+        );
     }
 }

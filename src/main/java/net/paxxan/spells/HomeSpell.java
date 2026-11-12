@@ -24,6 +24,7 @@ public class HomeSpell extends BaseFluteSpell {
         this.sequence = "LLLRLLRLRDR";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = (int) (20 * 60);
+        this.charge = 4;
     }
 
     @Override

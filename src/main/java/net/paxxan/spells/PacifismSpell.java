@@ -33,6 +33,7 @@ public class PacifismSpell extends BaseFluteSpell {
         this.sequence = "DDDLRLRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = (int) (20 * 15);
+        this.charge = 3;
     }
 
     @Override

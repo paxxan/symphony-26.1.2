@@ -48,7 +48,7 @@ public class SpellbookStackBlockEntity extends BlockEntity {
     public @Nullable Book removeTopBook() {
         if (books.isEmpty()) return null;
         List<Book> updated = new ArrayList<>(books);
-        Book top = updated.remove(updated.size() - 1);
+        Book top = updated.removeLast();
         books = List.copyOf(updated);
         setChanged();
         if (level != null && !level.isClientSide()) {

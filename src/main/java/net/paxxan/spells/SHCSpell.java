@@ -19,6 +19,7 @@ public class SHCSpell extends BaseFluteSpell {
         this.sequence = "RLULD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = (int) (20 * 1);
+        this.charge = 1;
     }
 
     @Override

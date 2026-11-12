@@ -19,6 +19,10 @@ public class ModSounds {
 
     public static final SoundEvent POOF = register("poof");
 
+    public static final SoundEvent FLUTE_CHARGE = register("flute_charge");
+
+    public static final SoundEvent FLUTE_FULL_CHARGE = register("flute_full_charge");
+
     private static SoundEvent register(String name) {
         Identifier id = Symphony.id(name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));

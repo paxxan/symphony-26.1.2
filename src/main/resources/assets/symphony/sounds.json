@@ -6,5 +6,17 @@
       "symphony:poof3"
     ],
     "subtitle": "sounds.symphony.poof"
+  },
+  "flute_charge": {
+    "sounds": [
+      "symphony:flute_charge"
+    ],
+    "subtitle": "sounds.symphony.flute_charge"
+  },
+  "flute_full_charge": {
+    "sounds": [
+      "symphony:flute_full_charge"
+    ],
+    "subtitle": "sounds.symphony.flute_charge"
   }
 }

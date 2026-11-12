@@ -29,6 +29,7 @@ public class HealPrayerSpell extends BaseFluteSpell {
         this.sequence = "LRLRD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = 20 * 15;
+        this.charge = 2;
     }
 
     @Override

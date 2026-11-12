@@ -23,7 +23,7 @@ public class ModFoods {
                                     new MobEffectInstance(MobEffects.REGENERATION, 400, 1),
                                     new MobEffectInstance(MobEffects.RESISTANCE, 6000, 0),
                                     new MobEffectInstance(MobEffects.ABSORPTION, 2400, 3),
-                                    new MobEffectInstance(ModEffects.FULL_LUNGS, 1200, 2)
+                                    new MobEffectInstance(ModEffects.FULL_LUNGS, 600, 1)
                             )
                     )
             )

@@ -3,6 +3,7 @@
   "item.symphony.flute_spirit_spawn_egg": "Flute Spirit Spawn Egg",
   "item.symphony.green_apple": "Green Apple",
   "item.symphony.spellbook": "Spellbook",
+  "item.symphony.melodic_essence": "Melodic Essence",
 
   "key.symphony.flute_up_note": "Up Note",
   "key.symphony.flute_left_note": "Left Note",
@@ -32,6 +33,7 @@
   "spell.symphony.shc": "Spontaneous Human Combustion",
   "spell.symphony.spelunker": "Spelunker",
   "spell.symphony.war_horn": "War Horn",
-  "item.symphony.flute.cooldown_message": "Spell is on cooldown"
+  "item.symphony.flute.cooldown_message": "Spell is on cooldown",
+  "item.symphony.flute.low_charge_message": "Flute does not have enough charge"
 
 }

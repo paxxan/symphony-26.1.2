@@ -22,6 +22,7 @@ public class BaseFluteSpell {
     String id = "";
     Identifier book_texture = Symphony.id("textures/item/spellbook/2d/home.png");
     int post_spell_cooldown = 0;
+    int charge = 0;
 
 
     public BaseFluteSpell() {
@@ -79,5 +80,9 @@ public class BaseFluteSpell {
 
     public Component getTranslatableName() {
         return Component.translatable("spell.symphony." + id);
+    }
+
+    public int getCharge() {
+        return charge;
     }
 }

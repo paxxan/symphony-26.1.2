@@ -41,6 +41,7 @@ public class LeapSpell extends BaseFluteSpell {
         this.sequence = "UUUURLRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = (int) (20 * 7.5);
+        this.charge = 2;
     }
 
     @Override

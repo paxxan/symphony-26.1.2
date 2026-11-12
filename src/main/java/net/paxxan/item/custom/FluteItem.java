@@ -1,5 +1,6 @@
 package net.paxxan.item.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,26 +41,13 @@ public class FluteItem extends Item {
     }
 
     @Override
-    public int getUseDuration(final ItemStack itemStack, final LivingEntity user) {
-        return 72000;
-    }
-
-    @Override
-    public ItemUseAnimation getUseAnimation(final ItemStack itemStack) {
-        return ItemUseAnimation.SPYGLASS;
-    }
-
-    @Override
-    public void onUseTick(Level level, LivingEntity livingEntity, ItemStack itemStack, int ticksRemaining) {
-        super.onUseTick(level, livingEntity, itemStack, ticksRemaining);
-    }
-
-    @Override
     public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
         if(slot != EquipmentSlot.MAINHAND || !owner.isAlive()) {
             itemStack.set(ModComponents.FLUTE_PLAYING_COMPONENT, false);
             itemStack.set(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
         }
+        Minecraft client = Minecraft.getInstance();
+
         super.inventoryTick(itemStack, level, owner, slot);
     }
 
@@ -84,8 +72,14 @@ public class FluteItem extends Item {
                         if (sequence.equals(spell.getSequence())) {
                             spellFound = true;
                             if (PlayerSpellManager.isReady(player, Symphony.id(spell.getID()))) {
-                                spell.cast(level, player);
-                                spell_cast = true;
+                                if (stack.getDamageValue() + spell.getCharge() < stack.getMaxDamage()) {
+                                    spell.cast(level, player);
+                                    spell_cast = true;
+                                    stack.hurtAndBreak(spell.getCharge(), player, hand);
+                                } else {
+                                    player.sendOverlayMessage(Component.translatable("item.symphony.flute.low_charge_message"));
+                                }
+
                             } else {
                                 player.sendOverlayMessage(Component.translatable("item.symphony.flute.cooldown_message"));
                             }
@@ -104,15 +98,12 @@ public class FluteItem extends Item {
                         player.getCooldowns().addCooldown(stack, 20);
                     }
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_TRUMPET_OXIDIZED, SoundSource.PLAYERS, 1f, 1f);
-                } else {
-                    stack.hurtAndBreak(1, player, hand);
                 }
-
-
             }
 
             return InteractionResult.SUCCESS_SERVER;
         }
         return super.use(level, player, hand);
     }
+
 }

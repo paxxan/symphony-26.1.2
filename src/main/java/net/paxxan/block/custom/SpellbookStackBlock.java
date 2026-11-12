@@ -83,9 +83,7 @@ public class SpellbookStackBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof SpellbookStackBlockEntity blockEntity) {
             Identifier id = Symphony.id(stack.get(ModComponents.SPELL_ID));
             if (id != null) {
-                float yaw = placer != null ? -placer.getYRot() : 0f;
-                yaw = (Math.round(yaw / 45f) * 45f) - 90f;
-                yaw += (level.getRandom().nextInt(3) - 1) * 15f;
+                float yaw = ((Math.round(((placer != null) ? -placer.getYRot() : 0f) / 45f) * 45f) - 90f) + (level.getRandom().nextInt(3) - 1) * 15f;
                 blockEntity.addBook(id, yaw);
             }
         }

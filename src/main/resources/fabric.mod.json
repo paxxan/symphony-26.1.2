@@ -5,13 +5,13 @@
 	"name": "Symphony",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"paxxan"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/paxxan/symphony-26.1.2"
 	},
-	"license": "CC0-1.0",
+	"license": "NON-AI CC0 1.0 Universal",
 	"icon": "assets/symphony/icon.png",
 	"environment": "*",
 	"entrypoints": {
