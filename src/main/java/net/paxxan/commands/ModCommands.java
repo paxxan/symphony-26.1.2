@@ -38,6 +38,11 @@ public class ModCommands {
                                         .then(Commands.argument("spell", StringArgumentType.word())
                                                 .suggests(SPELL_SUGGESTIONS)
                                                 .executes(ctx -> run(ctx, false)))))
+                                .then(Commands.literal("clear_cooldown")
+                                        .then(Commands.argument("targets", EntityArgument.players())
+                                                .then(Commands.argument("spell", StringArgumentType.word())
+                                                        .suggests(SPELL_SUGGESTIONS)
+                                                        .executes(ModCommands::clearCooldowns))))
                                 )));
     }
     private static final SuggestionProvider<CommandSourceStack> SPELL_SUGGESTIONS =
@@ -50,6 +55,27 @@ public class ModCommands {
                     "all".lines(),
                     builder);
 
+    private static int clearCooldowns(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        Collection<ServerPlayer> targets = EntityArgument.getPlayers(ctx, "targets");
+        String spellID = StringArgumentType.getString(ctx, "spell");
+        Identifier id = Symphony.id(spellID);
+        int changed = 0;
+        boolean all = spellID.equals("all") ? true : false;
+        if (!FluteSpells.ALL_SPELL_ID.contains(id) && !spellID.equals("all")) {
+            ctx.getSource().sendFailure(Component.literal("Unknown spell: " + spellID));
+            return 0;
+        }
+        for (ServerPlayer player : targets) {
+            if (all) {
+                PlayerSpellManager.clearAllCooldowns(player);
+            } else {
+                PlayerSpellManager.clearCooldown(player, id);
+            }
+        }
+        String str = "Cleared cooldown for " + spellID;
+        ctx.getSource().sendSuccess(() -> Component.literal(str), true);
+        return changed;
+    }
     private static int run(CommandContext<CommandSourceStack> ctx, boolean learn) throws CommandSyntaxException {
         Collection<ServerPlayer> targets = EntityArgument.getPlayers(ctx, "targets");
         String spellID = StringArgumentType.getString(ctx, "spell");

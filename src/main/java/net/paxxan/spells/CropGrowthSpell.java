@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.paxxan.Symphony;
 
 public class CropGrowthSpell extends BaseFluteSpell {
-    int RADIUS = 5;
+    int RADIUS = 3;
 
     public CropGrowthSpell() {
         super();
@@ -30,7 +30,7 @@ public class CropGrowthSpell extends BaseFluteSpell {
     @Override
     public void cast(Level level, Player player) {
         super.cast(level, player);
-        Iterable<BlockPos> affected_blocks = BlockPos.withinManhattan(player.blockPosition(), RADIUS / 2, RADIUS / 2, RADIUS / 2);
+        Iterable<BlockPos> affected_blocks = BlockPos.withinManhattan(player.blockPosition(), RADIUS, RADIUS, RADIUS);
         for (BlockPos blockPos : affected_blocks) {
             BlockState state = level.getBlockState(blockPos);
             Block block = state.getBlock();

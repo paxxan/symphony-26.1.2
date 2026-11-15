@@ -18,5 +18,11 @@
       "symphony:flute_full_charge"
     ],
     "subtitle": "sounds.symphony.flute_charge"
+  },
+  "spell_learn": {
+    "sounds": [
+      "symphony:spell_learn"
+    ],
+    "subtitle": "sounds.symphony.spell_learn"
   }
 }

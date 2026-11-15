@@ -29,6 +29,7 @@ import net.paxxan.item.ModItems;
 import net.paxxan.networking.ModPackets;
 import net.paxxan.sound.ModSounds;
 import net.paxxan.spells.PlayerSpellManager;
+import net.paxxan.stat.ModStats;
 import net.paxxan.tags.ModTags;
 import net.paxxan.worldgen.gen.ModWorldGeneration;
 import org.slf4j.Logger;
@@ -52,6 +53,7 @@ public class Symphony implements ModInitializer {
 		ModWorldGeneration.generateModWorldGen();
 		ModDataAttachments.registerAttachments();
 		ModCommands.registerCommands();
+		ModStats.registerStats();
 		SpawnPlacements.register(ModEntities.FLUTE_SPIRIT, SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING, FluteSpirit::checkFluteSpiritSpawnRules);
 

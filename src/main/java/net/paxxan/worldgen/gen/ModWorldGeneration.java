@@ -11,7 +11,7 @@ import net.paxxan.entity.ModEntities;
 
 public class ModWorldGeneration {
     public static void generateModWorldGen() {
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.MEADOW, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.FLOWER_FOREST), MobCategory.CREATURE,
-                ModEntities.FLUTE_SPIRIT, 5, 1, 1);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(Biomes.MEADOW, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.FLOWER_FOREST, Biomes.DARK_FOREST, Biomes.OLD_GROWTH_BIRCH_FOREST, Biomes.TAIGA), MobCategory.CREATURE,
+                ModEntities.FLUTE_SPIRIT, 13, 1, 2);
     }
 }

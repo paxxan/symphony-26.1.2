@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "bites=0": {
+      "model": "symphony:block/green_apple_block"
+    },
+    "bites=1": {
+      "model": "symphony:block/green_apple_block_slice1"
+    },
+    "bites=2": {
+      "model": "symphony:block/green_apple_block_slice2"
+    },
+    "bites=3": {
+      "model": "symphony:block/green_apple_block_slice3"
+    },
+    "bites=4": {
+      "model": "symphony:block/green_apple_block_core"
+    }
+  }
+}

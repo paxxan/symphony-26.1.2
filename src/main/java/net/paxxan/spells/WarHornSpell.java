@@ -31,10 +31,10 @@ public class WarHornSpell extends BaseFluteSpell {
         super();
         this.name = "War Horn";
         this.id = "war_horn";
-        this.description = "Knocks back enemies in a " + RADIUS + " block radius.";
+        this.description = "Knocks back and damages enemies in a " + RADIUS + " block radius.";
         this.sequence = "UULRLU";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
-        this.post_spell_cooldown = (int) (20 * 10);
+        this.post_spell_cooldown = (int) (20 * 25);
         this.charge = 3;
     }
 

@@ -57,6 +57,11 @@ public class SpellbookStackBlockEntity extends BlockEntity {
         return top;
     }
 
+    public Book getTopBook() {
+        if (books.isEmpty()) return null;
+        return books.getLast();
+    }
+
     public List<Book> getBooks() { return books; }
 
     @Override

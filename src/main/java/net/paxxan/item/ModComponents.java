@@ -15,6 +15,13 @@ public class ModComponents {
             Symphony.id("flute_playing"),
             DataComponentType.<Boolean>builder().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL).build()
     );
+
+    public static final DataComponentType<Integer> FLUTE_CHARGE = Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            Symphony.id("flute_charge"),
+            DataComponentType.<Integer>builder().persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT).build()
+    );
+
     public static final DataComponentType<String> FLUTE_SEQUENCE_COMPONENT = Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Symphony.id("flute_sequence"),

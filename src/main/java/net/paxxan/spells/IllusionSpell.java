@@ -14,7 +14,7 @@ public class IllusionSpell extends BaseFluteSpell {
         super();
         this.name = "Illusion";
         this.id = "illusion";
-        this.description = "Creates a decoy of the self.";
+        this.description = "Creates a decoy of the player.";
         this.sequence = "RDLD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = (int) (20 * 10);

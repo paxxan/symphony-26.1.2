@@ -18,6 +18,7 @@ import net.paxxan.entity.ModEntities;
 import net.paxxan.food.ModFoods;
 import net.paxxan.item.custom.EssenceItem;
 import net.paxxan.item.custom.FluteItem;
+import net.paxxan.item.custom.GreenAppleItem;
 import net.paxxan.item.custom.SpellbookItem;
 
 import java.util.function.Function;
@@ -26,7 +27,17 @@ public class ModItems {
 
     public static final Item FLUTE = register(
             "flute",
-            properties -> new FluteItem(properties.durability(64).component(ModComponents.FLUTE_PLAYING_COMPONENT, false).component(ModComponents.FLUTE_SEQUENCE_COMPONENT, "")));
+            properties -> new FluteItem(properties
+                    .stacksTo(1)
+                    .component(ModComponents.FLUTE_CHARGE, FluteItem.getMaxCharge())
+                    .component(ModComponents.FLUTE_PLAYING_COMPONENT, false)
+                    .component(ModComponents.FLUTE_SEQUENCE_COMPONENT, "")));
+
+    public static final Item DISPLAY_SPELLBOOK_2D = register(
+            "display_spellbook",
+            properties -> new Item(properties
+                    .component(ModComponents.SPELL_ID, "crop_growth"))
+    );
 
     public static final Item FLUTE_SPIRIT_SPAWN_EGG = register(
             "flute_spirit_spawn_egg",
@@ -34,10 +45,12 @@ public class ModItems {
 
     public static final Item GREEN_APPLE = register(
             "green_apple",
-            properties -> new Item(properties
+            properties -> new GreenAppleItem(properties
+                    .useBlockDescriptionPrefix()
                     .rarity(Rarity.RARE)
                     .food(ModFoods.GREEN_APPLE, ModFoods.GREEN_APPLE_CONSUMABLE)
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                    .setId(ResourceKey.create(Registries.ITEM, Symphony.id("green_apple")))
             )
     );
 
@@ -53,7 +66,9 @@ public class ModItems {
                     .useBlockDescriptionPrefix()
                     .stacksTo(1)
                     .rarity(Rarity.RARE)
-                    .setId(ResourceKey.create(Registries.ITEM, Symphony.id("spellbook")))));
+                    .setId(ResourceKey.create(Registries.ITEM, Symphony.id("spellbook")))
+            )
+    );
 
 
     private static Item register(String name, Function<Item.Properties, Item> function) {

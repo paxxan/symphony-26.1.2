@@ -68,6 +68,16 @@ public class PlayerSpellManager {
         player.setAttached(SPELL_COOLDOWNS, map);
     }
 
+    public static void clearCooldown(Player player, Identifier spell) {
+        setCooldown(player, spell, 0);
+    }
+
+    public static void clearAllCooldowns(Player player) {
+        Map<Identifier, Integer> map = new HashMap<>(player.getAttachedOrElse(SPELL_COOLDOWNS, Map.of()));
+        map.clear();
+        player.setAttached(SPELL_COOLDOWNS, map);
+    }
+
     public static void editCooldown(Player player, Identifier spell, int ticks) {
         setCooldown(player, spell, getCooldown(player, spell) + ticks);
     }

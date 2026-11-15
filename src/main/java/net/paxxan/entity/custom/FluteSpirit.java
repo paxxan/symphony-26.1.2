@@ -39,7 +39,9 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.zombie.Drowned;
+import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.entity.npc.InventoryCarrier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,8 +50,10 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -115,7 +119,7 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
     protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         super.populateDefaultEquipmentSlots(random, difficulty);
         ItemStack stack;
-        if (random.nextBoolean()) {
+        if (random.nextInt(10) > 4) {
             BaseFluteSpell spell = FluteSpells.ALL_SPELLS.get(random.nextInt(FluteSpells.ALL_SPELLS.size()));
             stack = new ItemStack(ModItems.SPELLBOOK);
             stack.set(ModComponents.SPELL_ID, spell.getID());
@@ -212,11 +216,12 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
 
     public static boolean checkFluteSpiritSpawnRules(final EntityType<FluteSpirit> type, final ServerLevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random) {
         if (spawnReason == EntitySpawnReason.NATURAL) {
-            if (random.nextFloat() > 0.3f || level.getSkyDarken() > 4) {
+            if (level.getBrightness(LightLayer.SKY, pos) > random.nextInt(32)) {
                 return false;
-            } else {
-                return true;
             }
+            DimensionType dimensionType = level.dimensionType();
+            int brightness = level.getLevel().isThundering() ? level.getMaxLocalRawBrightness(pos, 10) : level.getMaxLocalRawBrightness(pos);
+            return brightness <= dimensionType.monsterSpawnLightTest().sample(random);
         } else {
             return true;
         }
