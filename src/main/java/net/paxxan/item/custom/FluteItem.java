@@ -1,5 +1,7 @@
 package net.paxxan.item.custom;
 
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -14,6 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.paxxan.Symphony;
 import net.paxxan.effect.ModEffects;
@@ -21,10 +24,12 @@ import net.paxxan.item.ModComponents;
 import net.paxxan.spells.BaseFluteSpell;
 import net.paxxan.spells.FluteSpells;
 import net.paxxan.spells.PlayerSpellManager;
+import net.paxxan.stat.ModStats;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 
 public class FluteItem extends Item {
@@ -33,6 +38,8 @@ public class FluteItem extends Item {
     static float LEFT_NOTE_PITCH = (float) Math.pow(2,((double) 3 /12));
     static float RIGHT_NOTE_PITCH = (float) Math.pow(2,((double) 5 /12));
     static float DOWN_NOTE_PITCH = (float) Math.pow(2,((double) 10 /12));
+
+    static int MAX_CHARGE = 32;
 
     public static float[] NOTES = {UP_NOTE_PITCH, LEFT_NOTE_PITCH, RIGHT_NOTE_PITCH, DOWN_NOTE_PITCH};
 
@@ -45,10 +52,18 @@ public class FluteItem extends Item {
         if(slot != EquipmentSlot.MAINHAND || !owner.isAlive()) {
             itemStack.set(ModComponents.FLUTE_PLAYING_COMPONENT, false);
             itemStack.set(ModComponents.FLUTE_SEQUENCE_COMPONENT, "");
+
+        }
+        if (itemStack.get(ModComponents.FLUTE_CHARGE) > MAX_CHARGE) {
+            itemStack.set(ModComponents.FLUTE_CHARGE, MAX_CHARGE);
         }
         Minecraft client = Minecraft.getInstance();
 
         super.inventoryTick(itemStack, level, owner, slot);
+    }
+
+    public static int getMaxCharge() {
+        return MAX_CHARGE;
     }
 
     @Override
@@ -72,10 +87,13 @@ public class FluteItem extends Item {
                         if (sequence.equals(spell.getSequence())) {
                             spellFound = true;
                             if (PlayerSpellManager.isReady(player, Symphony.id(spell.getID()))) {
-                                if (stack.getDamageValue() + spell.getCharge() < stack.getMaxDamage()) {
+                                if (stack.get(ModComponents.FLUTE_CHARGE) - spell.getCharge() >= 0) {
                                     spell.cast(level, player);
                                     spell_cast = true;
-                                    stack.hurtAndBreak(spell.getCharge(), player, hand);
+                                    player.awardStat(ModStats.FLUTE_SPELLS_CAST_STAT, 1);
+                                    boolean known = PlayerSpellManager.knowsSpell(player,  Symphony.id(spell.getID()));
+                                    int charge_cost = known ? spell.getCharge() : (int) (spell.getCharge() * 1.5);
+                                    stack.set(ModComponents.FLUTE_CHARGE, stack.get(ModComponents.FLUTE_CHARGE) - spell.getCharge());
                                 } else {
                                     player.sendOverlayMessage(Component.translatable("item.symphony.flute.low_charge_message"));
                                 }
@@ -104,6 +122,22 @@ public class FluteItem extends Item {
             return InteractionResult.SUCCESS_SERVER;
         }
         return super.use(level, player, hand);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display,
+                                Consumer<Component> builder, TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, builder, flag);
+        builder.accept(Component.translatable("spell.symphony.charge").append(": " + getChargePercentage(stack)));
+
+    }
+
+    private String getChargePercentage(ItemStack stack) {
+        if (stack.get(ModComponents.FLUTE_CHARGE) == null){
+            return "penis%";
+        } else {
+            return "%d%%".formatted(stack.get(ModComponents.FLUTE_CHARGE).intValue() * 100/MAX_CHARGE);
+        }
     }
 
 }

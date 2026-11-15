@@ -149,6 +149,18 @@ public class SpellbookStackBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+        if (level.getBlockEntity(pos) instanceof SpellbookStackBlockEntity blockEntity) {
+            SpellbookStackBlockEntity.Book top = blockEntity.getTopBook();
+            if (top == null) return ItemStack.EMPTY;
+            ItemStack book = new ItemStack(ModItems.SPELLBOOK);
+            book.set(ModComponents.SPELL_ID, top.spell().getPath());
+            return book;
+        }
+        return super.getCloneItemStack(level, pos, state, includeData);
+    }
+
+    @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                           Player player, InteractionHand hand, BlockHitResult hit) {
         if (stack.is(ModItems.SPELLBOOK)) return InteractionResult.PASS;

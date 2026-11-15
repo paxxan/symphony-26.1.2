@@ -15,7 +15,7 @@ public class SHCSpell extends BaseFluteSpell {
         super();
         this.name = "Spontaneous Human Combustion";
         this.id = "shc";
-        this.description = "Sets the user on fire?";
+        this.description = "Ignites the target.";
         this.sequence = "RLULD";
         this.book_texture = Symphony.id("textures/item/spellbook/2d/" + id + ".png");
         this.post_spell_cooldown = (int) (20 * 1);

@@ -35,7 +35,7 @@ public class BaseFluteSpell {
         boolean full_lungs = false;
         MobEffectInstance effectInstance = null;
         int amplifier = 0;
-        int multiplier = PlayerSpellManager.knowsSpell(player, Symphony.id(id)) ? 1 : 2;
+        int cooldown_multiplier = PlayerSpellManager.knowsSpell(player, Symphony.id(id)) ? 1 : 3;
         if (player instanceof ServerPlayer) {
             if (player.hasEffect(ModEffects.FULL_LUNGS)) {
                 full_lungs = true;
@@ -44,9 +44,9 @@ public class BaseFluteSpell {
                 amplifier = effectInstance.getAmplifier() + 1;
             }
             if (full_lungs) {
-                PlayerSpellManager.setCooldown(player, Symphony.id(id), (int) (post_spell_cooldown / (amplifier * 1.5)) * multiplier);
+                PlayerSpellManager.setCooldown(player, Symphony.id(id), (int) (post_spell_cooldown / (amplifier * 1.5)) * cooldown_multiplier);
             } else {
-                PlayerSpellManager.setCooldown(player, Symphony.id(id), post_spell_cooldown * multiplier);
+                PlayerSpellManager.setCooldown(player, Symphony.id(id), post_spell_cooldown * cooldown_multiplier);
             }
 
         }
@@ -82,7 +82,16 @@ public class BaseFluteSpell {
         return Component.translatable("spell.symphony." + id);
     }
 
+    public Component getDescription() {
+        return Component.literal(this.description);
+        //return Component.translatable("spell.symphony.desc" + id);
+    }
+
     public int getCharge() {
         return charge;
+    }
+
+    public Identifier getSepiaBookTexture() {
+        return Symphony.id("textures/item/spellbook/2d/sepia/" + this.id + ".png");
     }
 }

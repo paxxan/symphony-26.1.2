@@ -1,6 +1,17 @@
 package net.paxxan.item.custom;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ElderGuardianParticle;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ItemInHandRenderer;
+import net.minecraft.client.renderer.ScreenEffectRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -21,6 +32,9 @@ import net.paxxan.attachments.ModDataAttachments;
 import net.paxxan.block.ModBlocks;
 import net.paxxan.block.custom.SpellbookStackBlock;
 import net.paxxan.item.ModComponents;
+import net.paxxan.item.ModItems;
+import net.paxxan.networking.packet.FlutePlayPayloadC2S;
+import net.paxxan.networking.packet.SpellbookLearnDisplayPayloadS2C;
 import net.paxxan.spells.PlayerSpellManager;
 
 import java.util.function.Consumer;
@@ -34,13 +48,16 @@ public class SpellbookItem extends BlockItem {
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
             if (PlayerSpellManager.learnSpell(serverPlayer, Symphony.id(player.getItemInHand(hand).get(ModComponents.SPELL_ID)))) {
-                player.sendSystemMessage(Component.literal("You learned " + player.getItemInHand(hand).get(ModComponents.SPELL_ID)));
+                ItemStack displayBook = new ItemStack(ModItems.DISPLAY_SPELLBOOK_2D);
+                displayBook.set(ModComponents.SPELL_ID, player.getItemInHand(hand).get(ModComponents.SPELL_ID));
+                ServerPlayNetworking.send(serverPlayer, new SpellbookLearnDisplayPayloadS2C(displayBook));
                 player.getItemInHand(hand).shrink(1);
                 return InteractionResult.SUCCESS;
             }
         }
         return super.use(level, player, hand);
     }
+
 
     @Override
     public Component getName(ItemStack itemStack) {

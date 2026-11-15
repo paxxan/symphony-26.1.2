@@ -2,12 +2,17 @@
   "parent": "symphony:obtain_flute",
   "criteria": {
     "eat_green_apple_criteria": {
+      "trigger": "minecraft:placed_block",
       "conditions": {
-        "item": {
-          "items": "symphony:green_apple"
+        "location": {
+          "condition": "minecraft:location_check",
+          "predicate": {
+            "block": {
+              "blocks": "symphony:green_apple"
+            }
+          }
         }
-      },
-      "trigger": "minecraft:consume_item"
+      }
     }
   },
   "display": {

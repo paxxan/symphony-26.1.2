@@ -23,6 +23,8 @@ public class ModSounds {
 
     public static final SoundEvent FLUTE_FULL_CHARGE = register("flute_full_charge");
 
+    public static final SoundEvent LEARN_SPELL = register("spell_learn");
+
     private static SoundEvent register(String name) {
         Identifier id = Symphony.id(name);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));

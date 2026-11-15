@@ -7,9 +7,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.paxxan.Symphony;
+import net.paxxan.block.custom.GreenAppleBlock;
 import net.paxxan.block.custom.SpellbookStackBlock;
 import net.paxxan.block.custom.SpellbookStackBlockEntity;
 import net.paxxan.sound.ModSounds;
@@ -22,13 +24,24 @@ public class ModBlocks {
                     .strength(0.5f)
                     .noOcclusion()
                     .sound(ModSounds.PAPER)
-                    .noLootTable()));
+                    .noLootTable()
+            )
+    );
 
     public static final BlockEntityType<SpellbookStackBlockEntity> SPELLBOOK_STACK_BE = Registry.register(
             BuiltInRegistries.BLOCK_ENTITY_TYPE,
             Symphony.id("spellbook"),
             FabricBlockEntityTypeBuilder
                     .create(SpellbookStackBlockEntity::new, SPELLBOOK_STACK).build());
+
+    public static final Block GREEN_APPLE_BLOCK = Registry.register(
+            BuiltInRegistries.BLOCK,
+            Symphony.id("green_apple"), new GreenAppleBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, Symphony.id("green_apple")))
+                    .strength(4f)
+                    .noOcclusion()
+                    .sound(SoundType.CANDLE))
+    );
 
     public static void registerBlocks(){
         Symphony.LOGGER.info("Registering Blocks for " + Symphony.MOD_ID);

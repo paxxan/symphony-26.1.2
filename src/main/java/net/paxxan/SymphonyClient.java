@@ -3,6 +3,7 @@ package net.paxxan;
 import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -16,6 +17,7 @@ import net.minecraft.client.entity.ClientMannequin;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.BossHealthOverlay;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.client.model.animal.allay.AllayModel;
@@ -24,6 +26,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SoulParticle;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -44,17 +47,22 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.minecart.MinecartChest;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.paxxan.block.ModBlocks;
 import net.paxxan.block.custom.SpellbookRenderer;
 import net.paxxan.effect.ModEffects;
 import net.paxxan.entity.ModEntities;
 import net.paxxan.entity.client.*;
+import net.paxxan.entity.custom.FluteSpirit;
 import net.paxxan.entity.custom.IllusionEntity;
 import net.paxxan.item.ModComponents;
 import net.paxxan.item.ModItems;
@@ -65,12 +73,14 @@ import net.paxxan.particle.EmissiveParticle;
 import net.paxxan.particle.ModParticles;
 import net.paxxan.particle.PaperParticle;
 import net.paxxan.particle.SeeThroughParticle;
+import net.paxxan.screens.SpellCompendiumScreen;
 import net.paxxan.spells.BaseFluteSpell;
 import net.paxxan.spells.FluteSpells;
 import net.paxxan.spells.PlayerSpellManager;
 import net.paxxan.tags.ModTags;
 import org.w3c.dom.Text;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import static net.fabricmc.fabric.impl.client.renderer.RendererManager.getRenderer;
@@ -103,6 +113,7 @@ public class SymphonyClient implements ClientModInitializer {
     private static void renderSpelunkerParticles(Minecraft client) {
         if (!client.isPaused()) {
             Level level = client.level;
+            Player player = client.player;
 
             int radius = 10;
             Predicate<? super TagKey<Block>> isValuable = tagKey -> tagKey.equals(ModTags.Blocks.VALUABLE_BLOCKS);
@@ -123,6 +134,22 @@ public class SymphonyClient implements ClientModInitializer {
                     }
                 }
             }
+            AABB box = new AABB(player.getX() - radius, player.getY() - radius, player.getZ() - radius, player.getX() + radius, player.getY() + radius, player.getZ() + radius);
+            List<Entity> entities = level.getEntities(player, box);
+            for (Entity entity : entities) {
+                if (entity instanceof MinecartChest || entity instanceof FluteSpirit) {
+                    BlockPos blockPos = entity.blockPosition();
+                    double x = blockPos.getX() + 0.5
+                            + (level.getRandom().nextDouble() - 0.5);
+                    double y = blockPos.getY() + 0.5
+                            + (level.getRandom().nextDouble() - 0.5);
+                    double z = blockPos.getZ() + 0.5
+                            + (level.getRandom().nextDouble() - 0.5);
+                    if (level.getRandom().nextFloat() <= 0.2f) {
+                        level.addParticle(ModParticles.SPELUNKER_PARTICLE, x, y, z, 0, 0, 0);
+                    }
+                }
+            }
         }
     }
 //
@@ -131,6 +158,13 @@ public class SymphonyClient implements ClientModInitializer {
             if (!client.isPaused()) PlayerSpellManager.tickSpellCooldowns(client.player);
             if (client.player.hasEffect(ModEffects.SPELUNKER)) {
                 renderSpelunkerParticles(client);
+            }
+            if (ModKeyMappings.SPELL_COMPENDIUM_MENU.consumeClick()) {
+                if (!(client.screen instanceof SpellCompendiumScreen)) {
+                    client.setScreen(new SpellCompendiumScreen(Component.empty(), client.player));
+                } else {
+                    client.setScreen(null);
+                }
             }
             ItemStack item = client.player.getMainHandItem();
             if (ModKeyMappings.FLUTE_UP_NOTE.consumeClick()) {

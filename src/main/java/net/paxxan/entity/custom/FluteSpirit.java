@@ -212,7 +212,7 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
 
     public static boolean checkFluteSpiritSpawnRules(final EntityType<FluteSpirit> type, final ServerLevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random) {
         if (spawnReason == EntitySpawnReason.NATURAL) {
-            if (random.nextFloat() > 0.3f || level.getSkyDarken() > 4) {
+            if (level.getSkyDarken() > 4) {
                 return false;
             } else {
                 return true;

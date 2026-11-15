@@ -10,10 +10,12 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BundleContents;
+import net.paxxan.item.ModComponents;
 import net.paxxan.item.ModItems;
 import net.paxxan.sound.ModSounds;
 
 public class EssenceItem extends Item {
+    int RESTORE_AMOUNT = 4;
     public EssenceItem(Properties properties) {
         super(properties);
     }
@@ -23,10 +25,10 @@ public class EssenceItem extends Item {
         ItemStack other = slot.getItem();
         if (/*clickAction == ClickAction.PRIMARY && */!other.isEmpty()) {
             if (other.is(ModItems.FLUTE)) {
-                if (other.getDamageValue() > 0) {
-                    other.setDamageValue(other.getDamageValue() - 8);
+                if (other.get(ModComponents.FLUTE_CHARGE) < FluteItem.getMaxCharge()) {
+                    other.set(ModComponents.FLUTE_CHARGE, other.get(ModComponents.FLUTE_CHARGE) + RESTORE_AMOUNT);
                     this.broadcastChangesOnContainerMenu(player);
-                    playInsertSound(player, 1.5F - ((float) other.getDamageValue() / 100), other.getDamageValue() == 0);
+                    playInsertSound(player, 0.9F + ((float) other.get(ModComponents.FLUTE_CHARGE) / 100), other.get(ModComponents.FLUTE_CHARGE) >= FluteItem.getMaxCharge());
                     self.consume(1, player);
                     return true;
                 }

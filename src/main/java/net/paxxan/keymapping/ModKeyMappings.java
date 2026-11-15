@@ -7,7 +7,7 @@ import net.paxxan.Symphony;
 import org.lwjgl.glfw.GLFW;
 
 public class ModKeyMappings {
-    private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Symphony.id("flute_notes"));
+    private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Symphony.id("symphony"));
 
     public static final KeyMapping FLUTE_UP_NOTE = KeyMappingHelper.registerKeyMapping(
             new KeyMapping("key.symphony.flute_up_note",
@@ -28,6 +28,11 @@ public class ModKeyMappings {
             new KeyMapping("key.symphony.flute_down_note",
                     InputConstants.Type.KEYSYM,
                     GLFW.GLFW_KEY_DOWN, CATEGORY));
+
+    public static final KeyMapping SPELL_COMPENDIUM_MENU = KeyMappingHelper.registerKeyMapping(
+            new KeyMapping("key.symphony.spell_compendium",
+                    InputConstants.Type.KEYSYM,
+                    GLFW.GLFW_KEY_O, CATEGORY));
 
     public static void register() {
         Symphony.LOGGER.info("Registering keybinds for " + Symphony.MOD_ID);
