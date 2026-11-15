@@ -119,7 +119,7 @@ public class FluteSpirit extends PathfinderMob implements InventoryCarrier, Vibr
     protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         super.populateDefaultEquipmentSlots(random, difficulty);
         ItemStack stack;
-        if (random.nextInt(10) > 4) {
+        if (random.nextInt(10) > 4)  {
             BaseFluteSpell spell = FluteSpells.ALL_SPELLS.get(random.nextInt(FluteSpells.ALL_SPELLS.size()));
             stack = new ItemStack(ModItems.SPELLBOOK);
             stack.set(ModComponents.SPELL_ID, spell.getID());
